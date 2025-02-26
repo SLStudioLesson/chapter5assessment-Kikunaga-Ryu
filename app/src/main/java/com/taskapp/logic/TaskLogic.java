@@ -13,7 +13,6 @@ public class TaskLogic {
     private final LogDataAccess logDataAccess;
     private final UserDataAccess userDataAccess;
 
-
     public TaskLogic() {
         taskDataAccess = new TaskDataAccess();
         logDataAccess = new LogDataAccess();
@@ -22,6 +21,7 @@ public class TaskLogic {
 
     /**
      * 自動採点用に必要なコンストラクタのため、皆さんはこのコンストラクタを利用・削除はしないでください
+     * 
      * @param taskDataAccess
      * @param logDataAccess
      * @param userDataAccess
@@ -40,6 +40,7 @@ public class TaskLogic {
      */
     public void showAll(User loginUser) {
         List<Task> tasks = taskDataAccess.findAll();
+        User users = new User(0, null, null, null);
 
         tasks.forEach(task -> {
             String status = "未着手";
@@ -48,8 +49,15 @@ public class TaskLogic {
             } else if (task.getStatus() == 2) {
                 status = "完了";
             }
-        
-        System.out.println("タスク名：" + task.getName() + ", 担当者名：" + repUser + ", ステータス：" + status);
+
+            String repUser = "";
+            if (loginUser.getCode() == users.getCode()) {
+                repUser = "あなたが担当しています";
+            } else {
+                repUser = task.getRepUser().getName() + "が担当しています";
+            }
+
+            System.out.println("タスク名：" + task.getName() + ", 担当者名：" + repUser + ", ステータス：" + status);
         });
     }
 
@@ -59,14 +67,14 @@ public class TaskLogic {
      * @see com.taskapp.dataaccess.UserDataAccess#findByCode(int)
      * @see com.taskapp.dataaccess.TaskDataAccess#save(com.taskapp.model.Task)
      * @see com.taskapp.dataaccess.LogDataAccess#save(com.taskapp.model.Log)
-     * @param code タスクコード
-     * @param name タスク名
+     * @param code        タスクコード
+     * @param name        タスク名
      * @param repUserCode 担当ユーザーコード
-     * @param loginUser ログインユーザー
+     * @param loginUser   ログインユーザー
      * @throws AppException ユーザーコードが存在しない場合にスローされます
      */
     // public void save(int code, String name, int repUserCode,
-    //                 User loginUser) throws AppException {
+    // User loginUser) throws AppException {
     // }
 
     /**
@@ -75,13 +83,13 @@ public class TaskLogic {
      * @see com.taskapp.dataaccess.TaskDataAccess#findByCode(int)
      * @see com.taskapp.dataaccess.TaskDataAccess#update(com.taskapp.model.Task)
      * @see com.taskapp.dataaccess.LogDataAccess#save(com.taskapp.model.Log)
-     * @param code タスクコード
-     * @param status 新しいステータス
+     * @param code      タスクコード
+     * @param status    新しいステータス
      * @param loginUser ログインユーザー
      * @throws AppException タスクコードが存在しない、またはステータスが前のステータスより1つ先でない場合にスローされます
      */
     // public void changeStatus(int code, int status,
-    //                         User loginUser) throws AppException {
+    // User loginUser) throws AppException {
     // }
 
     /**

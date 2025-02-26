@@ -17,6 +17,7 @@ public class UserDataAccess {
 
     /**
      * 自動採点用に必要なコンストラクタのため、皆さんはこのコンストラクタを利用・削除はしないでください
+     * 
      * @param filePath
      */
     public UserDataAccess(String filePath) {
@@ -25,7 +26,8 @@ public class UserDataAccess {
 
     /**
      * メールアドレスとパスワードを基にユーザーデータを探します。
-     * @param email メールアドレス
+     * 
+     * @param email    メールアドレス
      * @param password パスワード
      * @return 見つかったユーザー
      */
@@ -37,7 +39,8 @@ public class UserDataAccess {
             while ((line = reader.readLine()) != null) {
                 String[] values = line.split(",");
 
-                if (!(values[2].equals(email) && values[3].equals(password))) continue;
+                if (!(values[2].equals(email) && values[3].equals(password)))
+                    continue;
 
                 int code = Integer.parseInt(values[0]);
                 String name = values[1];
@@ -46,13 +49,15 @@ public class UserDataAccess {
                 user = new User(code, name, userEmail, userPassword);
             }
         } catch (IOException e) {
-            e.printStackTrace();;
+            e.printStackTrace();
+            ;
         }
         return user;
     }
 
     /**
      * コードを基にユーザーデータを取得します。
+     * 
      * @param code 取得するユーザーのコード
      * @return 見つかったユーザー
      */
