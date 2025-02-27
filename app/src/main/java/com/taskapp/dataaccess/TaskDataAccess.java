@@ -132,8 +132,8 @@ public class TaskDataAccess {
                 } else {
                     line = createLine(task);
                 }
-                writer.write(line);
                 writer.newLine();
+                writer.write(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
